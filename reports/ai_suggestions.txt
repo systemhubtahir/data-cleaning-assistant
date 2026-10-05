@@ -1,0 +1,123 @@
+{
+  "columns": [
+    {
+      "column_name": "CustomerID",
+      "detected_type": "int64",
+      "issues": [
+        "No missing values reported.",
+        "Potential duplicate IDs not verified."
+      ],
+      "recommended_actions": [
+        "Verify uniqueness of CustomerID and, if unique, set as primary key or index.",
+        "Keep as integer type."
+      ]
+    },
+    {
+      "column_name": "First_Name",
+      "detected_type": "object",
+      "issues": [
+        "No missing values reported.",
+        "Possible leading or trailing whitespace not assessed.",
+        "Inconsistent capitalization may exist."
+      ],
+      "recommended_actions": [
+        "Strip leading/trailing whitespace.",
+        "Standardize case (e.g., title case).",
+        "Keep as string/object type."
+      ]
+    },
+    {
+      "column_name": "Last_Name",
+      "detected_type": "object",
+      "issues": [
+        "1 missing value (NaN).",
+        "Values contain leading punctuation or unusual characters (e.g., \"/White\", \"...Potter\").",
+        "Extra whitespace in some entries (e.g., \"  Winger\")."
+      ],
+      "recommended_actions": [
+        "Replace NaN with a placeholder or consider imputation.",
+        "Remove leading non‑alphabetic characters and trim whitespace.",
+        "Standardize case (e.g., title case).",
+        "Convert to string/object type."
+      ]
+    },
+    {
+      "column_name": "Phone_Number",
+      "detected_type": "object",
+      "issues": [
+        "2 missing values reported (including explicit \"N/a\" placeholder).",
+        "Mixed data types: numeric integers and string values.",
+        "Potential non‑standard formatting (no country code, variable length)."
+      ],
+      "recommended_actions": [
+        "Treat \"N/a\" and NaN as missing values.",
+        "Convert all entries to string.",
+        "Remove any non‑numeric characters (e.g., spaces, dashes) if present.",
+        "Optionally pad or validate length for a consistent phone format.",
+        "Consider creating a separate flag for missing phone numbers."
+      ]
+    },
+    {
+      "column_name": "Address",
+      "detected_type": "object",
+      "issues": [
+        "No missing values reported.",
+        "No sample indicating formatting inconsistencies, but free‑text fields often vary."
+      ],
+      "recommended_actions": [
+        "Trim leading/trailing whitespace.",
+        "Optionally standardize case or apply address parsing if needed."
+      ]
+    },
+    {
+      "column_name": "Paying Customer",
+      "detected_type": "object",
+      "issues": [
+        "Multiple categorical representations for the same concept (\"Yes\", \"Y\", \"No\", \"N\", \"N/a\").",
+        "Potential ambiguous value \"N/a\" which may indicate missing or not applicable."
+      ],
+      "recommended_actions": [
+        "Map \"Yes\" and \"Y\" to True, \"No\" and \"N\" to False.",
+        "Treat \"N/a\" as missing (NaN) or decide on a domain‑specific meaning.",
+        "Convert the column to a boolean dtype after mapping."
+      ]
+    },
+    {
+      "column_name": "Do_Not_Contact",
+      "detected_type": "object",
+      "issues": [
+        "4 missing values reported (including explicit NaN).",
+        "Inconsistent categorical values (\"Yes\", \"Y\", \"No\", \"N\")."
+      ],
+      "recommended_actions": [
+        "Map \"Yes\" and \"Y\" to True, \"No\" and \"N\" to False.",
+        "Keep NaN as missing or decide on default (e.g., False).",
+        "Convert the column to boolean dtype after mapping."
+      ]
+    },
+    {
+      "column_name": "Not_Useful_Column",
+      "detected_type": "bool",
+      "issues": [
+        "The column appears to contain no useful information for analysis."
+      ],
+      "recommended_actions": [
+        "Drop the column from the dataset."
+      ]
+    }
+  ],
+  "dataset_level_issues": [
+    "Inconsistent categorical encodings across \"Paying Customer\" and \"Do_Not_Contact\".",
+    "Mixed data types and placeholder strings in \"Phone_Number\".",
+    "Presence of special characters and whitespace issues in \"Last_Name\".",
+    "Missing values in several columns (Last_Name, Phone_Number, Do_Not_Contact).",
+    "A column flagged as not useful (Not_Useful_Column) that should be removed."
+  ],
+  "general_recommendations": [
+    "Standardize column names (e.g., replace spaces with underscores) if further processing requires it.",
+    "Perform a full scan for duplicate rows or duplicate CustomerID values.",
+    "After cleaning, enforce consistent data types: int for IDs, bool for binary flags, string for names/addresses.",
+    "Document any domain‑specific decisions made for ambiguous values such as \"N/a\".",
+    "Consider adding validation rules for phone numbers (e.g., length, numeric only)."
+  ]
+}
